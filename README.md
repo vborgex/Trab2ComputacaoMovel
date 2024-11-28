@@ -1,20 +1,17 @@
 # Agenda Viagem
 
-Agenda Viagem é um aplicativo Flutter que permite aos usuários registrar e gerenciar suas experiências de viagem. Os usuários podem adicionar entradas de viagem com informações como título, descrição, localização, data e até mesmo imagens.
+Agenda Viagem é um aplicativo Flutter que permite aos usuários registrar e gerenciar suas experiências de viagem. Os usuários podem adicionar entradas de viagem com informações como título, descrição, localização, data e uma nota de 0 a 10 as viagens.
 
 ## Funcionalidades
 
 - Adicionar, editar e excluir entradas de viagem
 - Selecionar uma data para a entrada de viagem
-- Carregar imagens da galeria
-- Interface amigável e responsiva
 
 ## Tecnologias Utilizadas
 
 - Flutter
 - Dart
 - intl (para formatação de datas)
-- image_picker (para seleção de imagens)
 - sqflite (para armazenamento local com SQLite)
 
 ## Pré-requisitos
@@ -51,7 +48,6 @@ Antes de começar, você precisará ter o Flutter instalado em sua máquina. Voc
 
 - `lib/`: Contém o código-fonte do aplicativo.
 - `helper/`: Contém classes auxiliares, como `traveldiary_helper.dart`.
-- `assets/`: Contém recursos como imagens.
   
 ## Banco de Dados
 
