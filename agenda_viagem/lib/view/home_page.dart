@@ -89,8 +89,8 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _entryCard(BuildContext context, int index) {
-    DateTime dateTime = DateTime.parse(entries[index].date);
-    String formattedDate = DateFormat('dd/MM/yy').format(dateTime);
+      DateTime dateTime = DateTime.parse(entries[index].date);
+      String formattedDate = DateFormat('dd/MM/yy').format(dateTime);    
     
     return GestureDetector(
       onTap:(() =>  _showOptions(context, index)),
@@ -148,50 +148,82 @@ class _HomePageState extends State<HomePage> {
       _getAllEntries();
     }
   }
-
-  void _showOptions (BuildContext context, int index){
-    showModalBottomSheet(
-      context: context,
-      builder: (context) {
-        return BottomSheet(
-          onClosing: () {
-            
-          },
-          builder: (context) {
-            return Container(
-              padding: EdgeInsets.all(10.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: <Widget>[
-                  TextButton(
-                    child: const Text("Editar",
-                    style: TextStyle(color: Colors.blue,
-                    fontSize: 20.0)),
-                    onPressed: (() {
-                      Navigator.pop(context);
-                      _showEntryPage(entry: entries[index]);
-                    }),
+  void _showOptions(BuildContext context, int index) {
+  showModalBottomSheet(
+    context: context,
+    builder: (context) {
+      return BottomSheet(
+        onClosing: () {},
+        builder: (context) {
+          return Container(
+            padding: EdgeInsets.all(10.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                TextButton(
+                  child: const Text(
+                    "Editar",
+                    style: TextStyle(color: Colors.blue, fontSize: 20.0),
                   ),
-                  TextButton(
-                    child: const Text("Excluir",
-                    style: TextStyle(color: Colors.red,
-                    fontSize: 20.0)),
-                    onPressed: (() {
-                      helper.deleteTravelDiaryEntry(entries[index].id);
-                      setState(() {
-                        entries.removeAt(index);
-                        Navigator.pop(context);
-                      });
-                    }),
-                  )
-                ],
-              ),
-            );
-          },
-        );
-      }
-    );
-  }
+                  onPressed: (() {
+                    Navigator.pop(context);
+                    _showEntryPage(entry: entries[index]);
+                  }),
+                ),
+                TextButton(
+                  child: const Text(
+                    "Excluir",
+                    style: TextStyle(color: Colors.red, fontSize: 20.0),
+                  ),
+                  onPressed: (() {
+                    Navigator.pop(context); // Fecha o BottomSheet
+                    _confirmDelete(context, index); // Confirmação antes de excluir
+                  }),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+    },
+  );
+}
+
+void _confirmDelete(BuildContext context, int index) {
+  showDialog(
+    context: context,
+    builder: (context) {
+      return AlertDialog(
+        title: const Text("Confirmar Exclusão"),
+        content: const Text(
+            "Tem certeza de que deseja excluir esta entrada? Esta ação não pode ser desfeita."),
+        actions: <Widget>[
+          TextButton(
+            child: const Text("Cancelar"),
+            onPressed: () {
+              Navigator.pop(context); // Fecha o diálogo
+            },
+          ),
+          TextButton(
+            child: const Text(
+              "Excluir",
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () {
+              helper.deleteTravelDiaryEntry(entries[index].id);
+              setState(() {
+                entries.removeAt(index); // Remove a entrada da lista
+              });
+              Navigator.pop(context); // Fecha o diálogo
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
 
   void _orderList(OrderOptions result){
     switch(result){

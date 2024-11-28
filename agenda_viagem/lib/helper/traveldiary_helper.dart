@@ -30,7 +30,7 @@ class TravelDiaryHelper {
     
     final databasePath = await getDatabasesPath();
     final path = join(databasePath, 'traveldiarynew.db');
-
+    await deleteDatabase(path);
     return await openDatabase(path, version: 4, onCreate: (Database db, int version) async {
       await db.execute("CREATE TABLE $diaryTable($idColumn INTEGER PRIMARY KEY, $dateColumn TEXT, $titleColumn TEXT, $descriptionColumn TEXT, $localizationColumn TEXT, $ratingColumn TEXT)");
     });
